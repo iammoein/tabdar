@@ -90,13 +90,13 @@ const paths: Record<IconName, ReactNode> = {
     </>
   ),
 };
-export default function Icon({
-  name,
-  size = 20,
-}: {
+
+type IconProps = {
   name: IconName;
   size?: number;
-}) {
+};
+
+export default function Icon({ name, size = 20 }: IconProps) {
   return (
     <svg
       aria-hidden="true"
