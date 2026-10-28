@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+.tab-list-scroll {
+  overscroll-behavior: contain;
+  margin: 0 -4px 13px;
+  padding: 0 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) transparent;
+}
+
+.tab-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tab-list-scroll::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 999px;
+}
+
 :root {
   --primary: #193f8f;
   --primary-hover: #153575;
@@ -8,6 +25,8 @@
   --primary-soft: #f2f5fc;
   --primary-border: #c8d5f0;
   --background: #f5f7fa;
+  --popup-background: #f5f6f8;
+  --surface: #fff;
   --surface: #fff;
   --elevated: #fff;
   --surface-subtle: #f9fafb;
@@ -36,7 +55,7 @@
   --shadow-glass: 0 18px 48px rgba(17, 24, 39, 0.16);
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --primary: #4776d0;
   --primary-hover: #5b87e0;
   --primary-active: #6c96e8;
@@ -44,6 +63,7 @@
   --primary-soft: #202b43;
   --primary-border: #365181;
   --background: #15171c;
+  --popup-background: #232630;
   --surface: #1e2028;
   --elevated: #252832;
   --surface-subtle: #252832;
@@ -70,10 +90,12 @@
 
   body {
     margin: 0;
-    font-family: 'Vazirmatn', sans-serif;
+    font-family: "Vazirmatn", sans-serif;
     color: var(--text);
     background: var(--background);
-    transition: background 0.18s ease, color 0.18s ease;
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
   }
 
   button,

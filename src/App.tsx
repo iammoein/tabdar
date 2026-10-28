@@ -1,6 +1,6 @@
 import Checkbox from "@/shared/components/Checkbox";
-import BrowswerTabItem from "@/features/tabs/components/BrowserTabItem";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
+import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 
 export default function App() {
   const {
@@ -28,19 +28,11 @@ export default function App() {
           selected {selectedTabIds.size}
         </small>
       </label>
-      <ul>
-        {tabs.map((tab) => (
-          <li key={tab.id}>
-            <BrowswerTabItem
-              title={tab.title ?? "تب بدون عنوان"}
-              tabUrl={tab.url ?? "آدرس در دسترس نیست"}
-              imgSrc={tab.favIconUrl ?? ""}
-              onChange={(e) => handleSelectTab(e, tab.id)}
-              checked={tab.id !== undefined && selectedTabIds.has(tab.id)}
-            />
-          </li>
-        ))}
-      </ul>
+      <BrowserTabList
+        tabs={tabs}
+        selectedTabIds={selectedTabIds}
+        handleSelectTab={handleSelectTab}
+      />
     </main>
   );
 }
