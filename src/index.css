@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+.tab-icon-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-hover) 25%,
+    color-mix(in srgb, var(--surface-hover), var(--muted) 18%) 50%,
+    var(--surface-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: tab-icon-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes tab-icon-loading {
+  to {
+    background-position-x: -200%;
+  }
+}
+
 .tab-list-scroll {
   overscroll-behavior: contain;
   margin: 0 -4px 13px;
