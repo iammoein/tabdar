@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import type { Collection } from "@/features/collections/types/collection.types";
@@ -7,6 +7,11 @@ import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
 import Icon from "@/shared/components/Icon";
+import {
+  getCollections,
+  saveCollections,
+} from "@/services/browser/collections";
+import QuickCollection from "@/features/collections/components/QuickCollection";
 
 export default function App() {
   const {
@@ -22,6 +27,15 @@ export default function App() {
   const [collections, setCollections] = useState<Collection[]>([]);
   const selectedTabsLength = selectedTabIds.size;
 
+  useEffect(() => {
+    const fetchCollections = async () => {
+      const browserCollections = await getCollections();
+      setCollections(browserCollections);
+    };
+
+    fetchCollections();
+  }, []);
+
   const selectedTabs = tabs.filter(
     (tab) => tab.id !== undefined && selectedTabIds.has(tab.id),
   );
@@ -30,11 +44,12 @@ export default function App() {
     setIsModal(true);
   };
 
-  const handleSaveCollection = (newCollection: Collection) => {
-    setCollections((prev) => [...prev, newCollection]);
-  };
+  const handleSaveCollection = async (newCollection: Collection) => {
+    const updatedCollections =  [...collections, newCollection];
 
-  console.log(collections);
+    setCollections(updatedCollections);
+    await saveCollections(collections);
+  };
 
   return (
     <main className="flex flex-col min-h-screen min-w-120 p-4.5 bg-(--popup-background)">
