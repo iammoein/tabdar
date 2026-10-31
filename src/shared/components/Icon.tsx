@@ -94,15 +94,17 @@ const paths: Record<IconName, ReactNode> = {
 type IconProps = {
   name: IconName;
   size?: number;
+  color?: string;
 };
 
-export default function Icon({ name, size = 20 }: IconProps) {
+export default function Icon({ name, size = 20, color }: IconProps) {
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
       width={size}
       height={size}
+      color={color}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.8"
