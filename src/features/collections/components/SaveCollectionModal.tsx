@@ -44,7 +44,7 @@ export default function SaveCollectionModal({
 
   return (
     <div className="overlay">
-      <div className=" p-6 bg-(--elevated) rounded-(--r-lg) border border-(--border)">
+      <div className="max-h-[calc(100dvh-40px)] overflow-y-auto overscroll-contain p-6 bg-(--elevated) rounded-(--r-lg) border border-(--border)">
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
             <div className="flex items-center justify-center size-10.5 bg-(--primary-soft) rounded-(--r-lg)">
