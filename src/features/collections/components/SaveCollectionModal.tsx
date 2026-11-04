@@ -3,6 +3,7 @@ import Button from "@/shared/components/Button";
 import Icon from "@/shared/components/Icon";
 import Input from "@/shared/components/Input";
 import Textarea from "@/shared/components/Textarea";
+import Modal from "@/shared/components/Modal";
 import { useState } from "react";
 
 type ModalProps = {
@@ -43,8 +44,10 @@ export default function SaveCollectionModal({
   };
 
   return (
-    <div className="overlay">
-      <div className="max-h-[calc(100dvh-40px)] overflow-y-auto overscroll-contain p-6 bg-(--elevated) rounded-(--r-lg) border border-(--border)">
+    <Modal
+      onClose={onClose}
+      contentClassName="p-6 bg-(--elevated) rounded-(--r-lg) border border-(--border)"
+    >
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
             <div className="flex items-center justify-center size-10.5 bg-(--primary-soft) rounded-(--r-lg)">
@@ -117,7 +120,6 @@ export default function SaveCollectionModal({
             Discard
           </Button>
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }
