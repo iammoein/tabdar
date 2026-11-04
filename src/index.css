@@ -1,22 +1,5 @@
 @import "tailwindcss";
 
-.tab-icon-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--surface-hover) 25%,
-    color-mix(in srgb, var(--surface-hover), var(--muted) 18%) 50%,
-    var(--surface-hover) 75%
-  );
-  background-size: 200% 100%;
-  animation: tab-icon-loading 1.2s ease-in-out infinite;
-}
-
-@keyframes tab-icon-loading {
-  to {
-    background-position-x: -200%;
-  }
-}
-
 .tab-list-scroll {
   overscroll-behavior: contain;
   margin: 0 -4px 13px;
@@ -43,7 +26,6 @@
   --primary-border: #c8d5f0;
   --background: #f5f7fa;
   --popup-background: #f5f6f8;
-  --surface: #fff;
   --surface: #fff;
   --elevated: #fff;
   --surface-subtle: #f9fafb;
@@ -98,6 +80,118 @@
   --overlay: rgba(5, 7, 12, 0.68);
   --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.18);
   --shadow-glass: 0 20px 54px rgba(0, 0, 0, 0.42);
+}
+
+@layer components {
+  .button {
+    min-height: 44px;
+    border: 1px solid transparent;
+    border-radius: var(--r-sm);
+    padding: 0 17px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+      transform 0.15s,
+      background 0.15s,
+      border-color 0.15s;
+  }
+
+  .button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .button.primary {
+    color: var(--on-primary);
+    background: var(--primary);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  .button.primary:hover {
+    background: var(--primary-hover);
+  }
+
+  .button.primary:active {
+    background: var(--primary-active);
+  }
+
+  .button.secondary {
+    color: var(--text);
+    background: var(--surface);
+    border-color: var(--border);
+  }
+
+  .button.secondary:hover {
+    border-color: var(--primary-border);
+    background: var(--surface-hover);
+  }
+
+  .button.danger {
+    color: var(--danger);
+    background: transparent;
+    border-color: color-mix(in srgb, var(--danger) 30%, var(--border));
+  }
+
+  .button.danger:hover {
+    background: var(--danger-soft);
+  }
+
+  .button.none {
+    min-height: 0;
+    padding: 0;
+    color: var(--muted);
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .button.none:hover {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: var(--overlay);
+    backdrop-filter: blur(3px);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    animation: fade 0.18s ease-out;
+  }
+
+  .tab-icon-skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--surface-hover) 25%,
+      color-mix(in srgb, var(--surface-hover), var(--muted) 18%) 50%,
+      var(--surface-hover) 75%
+    );
+    background-size: 200% 100%;
+    animation: tab-icon-loading 1.2s ease-in-out infinite;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes tab-icon-loading {
+  to {
+    background-position-x: -200%;
+  }
 }
 
 @layer base {
