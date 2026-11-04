@@ -1,12 +1,19 @@
-import type { Collection } from "@/features/collections/types/collection.types";
+import type {
+  Collection,
+  CollectionTab,
+} from "@/features/collections/types/collection.types";
 import Icon from "@/shared/components/Icon";
 import Button from "@/shared/components/Button";
 
 type QuickCollectionProps = {
   collections: Collection[];
+  onRestoreTab: (tabs: CollectionTab[]) => void;
 };
 
-export default function QuickCollection({ collections }: QuickCollectionProps) {
+export default function QuickCollection({
+  collections,
+  onRestoreTab,
+}: QuickCollectionProps) {
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="flex justify-between items-center">
@@ -15,9 +22,12 @@ export default function QuickCollection({ collections }: QuickCollectionProps) {
         <span className="text-(--primary)">See All</span>
       </div>
 
-      <ul>
+      <ul className="tab-list-scroll flex flex-col gap-4 max-h-77 overflow-y-auto p-1">
         {collections.map((collection) => (
-          <li className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5">
+          <li
+            key={collection.id}
+            className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5"
+          >
             <div className="flex items-center justify-center size-10.5 bg-(--primary-soft) rounded-(--r-lg)">
               <Icon name="archive" color="var(--primary)" />
             </div>
@@ -33,6 +43,10 @@ export default function QuickCollection({ collections }: QuickCollectionProps) {
             <Button
               variant="none"
               className="flex size-8 items-center justify-center hover:transform-none"
+              onClick={() => {
+                console.log("Button clicked");
+                onRestoreTab(collection.tabs);
+              }}
             >
               <Icon name="external" />
             </Button>

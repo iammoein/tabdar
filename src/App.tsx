@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
+import type {
+  Collection,
+  CollectionTab,
+} from "@/features/collections/types/collection.types";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
-import type { Collection } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
 import Button from "@/shared/components/Button";
@@ -12,6 +15,8 @@ import {
   saveCollections,
 } from "@/services/browser/collections";
 import QuickCollection from "@/features/collections/components/QuickCollection";
+import Divider from "@/shared/components/Divider";
+import { restoreTabs } from "@/services/browser/tabs";
 
 export default function App() {
   const {
@@ -23,8 +28,9 @@ export default function App() {
     handleSelectTab,
   } = useBrowserTabs();
 
-  const [isModal, setIsModal] = useState(false);
+  const [isSaveModal, setisSaveModal] = useState(false);
   const [collections, setCollections] = useState<Collection[]>([]);
+
   const selectedTabsLength = selectedTabIds.size;
 
   useEffect(() => {
@@ -41,14 +47,18 @@ export default function App() {
   );
 
   const handleSaveTabs = () => {
-    setIsModal(true);
+    setisSaveModal(true);
   };
 
   const handleSaveCollection = async (newCollection: Collection) => {
-    const updatedCollections =  [...collections, newCollection];
+    const updatedCollections = [...collections, newCollection];
 
     setCollections(updatedCollections);
-    await saveCollections(collections);
+    await saveCollections(updatedCollections);
+  };
+
+  const handleRestorTab = async (tabs: CollectionTab[]) => {
+    await restoreTabs(tabs);
   };
 
   return (
@@ -68,12 +78,12 @@ export default function App() {
         </small>
       </label>
 
-      {isModal && (
+      {isSaveModal && (
         <SaveCollectionModal
           selectedTabLength={selectedTabsLength}
           selectedTabs={selectedTabs}
           onSave={handleSaveCollection}
-          onClose={() => setIsModal(false)}
+          onClose={() => setisSaveModal(false)}
         />
       )}
 
@@ -86,6 +96,21 @@ export default function App() {
       <Button onClick={handleSaveTabs}>
         <Icon name="archive" size={18} />
         Save {selectedTabsLength} selected Tab
+      </Button>
+
+      <div className="flex flex-col justify-center gap-3 mt-3">
+        <Divider />
+
+        <QuickCollection
+          collections={collections}
+          onRestoreTab={handleRestorTab}
+        />
+
+        <Divider />
+      </div>
+
+      <Button variant="none" className="text-(--primary)">
+        Go To Tabdar Pannel
       </Button>
     </main>
   );
