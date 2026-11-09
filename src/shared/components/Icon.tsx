@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type IconName =
+export type IconName =
   | "tabs"
   | "archive"
   | "settings"
@@ -14,7 +14,10 @@ type IconName =
   | "grid"
   | "sun"
   | "moon"
-  | "system";
+  | "system"
+  | "warning"
+  | "chart"
+  | "shield";
 
 const paths: Record<IconName, ReactNode> = {
   tabs: (
@@ -27,7 +30,7 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M4 7h16" />
       <path d="M5 7v11h14V7" />
-      <path d="M9 11h6" />
+      <path d="M9 11h6" />‬
       <path d="M3 4h18v3H3z" />
     </>
   ),
@@ -87,6 +90,24 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <rect x="3" y="4" width="18" height="13" rx="2" />
       <path d="M8 21h8M12 17v4" />
+    </>
+  ),
+  warning: (
+    <>
+      <path d="M10.3 4.1 2.6 18a2 2 0 0 0 1.8 3h15.2a2 2 0 0 0 1.8-3L13.7 4.1a2 2 0 0 0-3.4 0Z" />
+      <path d="M12 9v4M12 17h.01" />
+    </>
+  ),
+  chart: (
+    <>
+      <path d="M4 19V9M10 19V5M16 19v-7M22 19H2" />
+      <path d="m4 8 6-4 6 5 5-4" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 3 5 6v5c0 4.8 2.9 8 7 10 4.1-2 7-5.2 7-10V6l-7-3Z" />
+      <path d="m9 12 2 2 4-5" />
     </>
   ),
 };
