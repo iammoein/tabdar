@@ -32,7 +32,7 @@ export default function QuickCollection({
               <Icon name="archive" color="var(--primary)" />
             </div>
             <div className="flex flex-col w-full">
-              <strong className="text-(--text) text-[15px]">
+              <strong className="text-(--text) text-[10px]">
                 {collection.title}
               </strong>
               <small className="text-(--muted)">

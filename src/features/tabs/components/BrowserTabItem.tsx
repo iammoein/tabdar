@@ -61,8 +61,8 @@ export default function BrowserTabItem({
       </span>
 
       <div className="flex flex-col">
-        <strong>{title}</strong>
-        <small>{hostname}</small>
+        <strong className="text-(--text) text-[10px]">{title}</strong>
+        <small className="text-(--secondary) text-[9px]">{hostname}</small>
       </div>
     </label>
   );
