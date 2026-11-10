@@ -6,12 +6,17 @@ import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
 import Icon from "@/shared/components/Icon";
 import Input from "@/shared/components/Input";
+import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
+import useCollections from "@/features/collections/hooks/useCollections";
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState("");
+  const [isSaveModal, setIsSaveModal] = useState(false);
 
   const { tabs, selectedTabIds, handleSelectAllTabs, handleSelectTab } =
     useBrowserTabs();
+
+  const { handleSaveCollection } = useCollections();
 
   const filteredTabs = tabs.filter(
     (tab) =>
@@ -24,6 +29,10 @@ export default function Home() {
     filteredTabs.every(
       (tab) => tab.id !== undefined && selectedTabIds.has(tab.id),
     );
+
+  const selectedTabs = tabs.filter(
+    (tab) => tab.id !== undefined && selectedTabIds.has(tab.id),
+  );
 
   return (
     <div className="w-full bg-(--surface) border border-(--border) rounded-(--r-lg) overflow-hidden">
@@ -75,9 +84,18 @@ export default function Home() {
             <Icon name="close" />
             Close Selected Tabs
           </Button>
-          <Button variant="primary">Save {selectedTabIds.size} tab</Button>
+          <Button variant="primary" onClick={() => setIsSaveModal(true)}>Save {selectedTabIds.size} tab</Button>
         </div>
       </div>
+
+      {isSaveModal && (
+        <SaveCollectionModal
+          selectedTabLength={selectedTabIds.size}
+          selectedTabs={selectedTabs}
+          onSave={handleSaveCollection}
+          onClose={() => setIsSaveModal(false)}
+        />
+      )}
     </div>
   );
 }

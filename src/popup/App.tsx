@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import type {
-  Collection,
-  CollectionTab,
-} from "@/features/collections/types/collection.types";
+import type { CollectionTab } from "@/features/collections/types/collection.types";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
 import Icon from "@/shared/components/Icon";
-import {
-  getCollections,
-  saveCollections,
-} from "@/services/browser/collections";
+
 import QuickCollection from "@/features/collections/components/QuickCollection";
 import Divider from "@/shared/components/Divider";
 import { restoreTabs } from "@/services/browser/tabs";
+import useCollections from "@/features/collections/hooks/useCollections";
 
 export default function App() {
   const {
@@ -29,32 +24,17 @@ export default function App() {
   } = useBrowserTabs();
 
   const [isSaveModal, setisSaveModal] = useState(false);
-  const [collections, setCollections] = useState<Collection[]>([]);
 
   const selectedTabsLength = selectedTabIds.size;
-
-  useEffect(() => {
-    const fetchCollections = async () => {
-      const browserCollections = await getCollections();
-      setCollections(browserCollections);
-    };
-
-    fetchCollections();
-  }, []);
 
   const selectedTabs = tabs.filter(
     (tab) => tab.id !== undefined && selectedTabIds.has(tab.id),
   );
 
+  const { collections, handleSaveCollection } = useCollections();
+
   const handleSaveTabs = () => {
     setisSaveModal(true);
-  };
-
-  const handleSaveCollection = async (newCollection: Collection) => {
-    const updatedCollections = [...collections, newCollection];
-
-    setCollections(updatedCollections);
-    await saveCollections(updatedCollections);
   };
 
   const handleRestorTab = async (tabs: CollectionTab[]) => {
@@ -70,7 +50,10 @@ export default function App() {
       <label className="w-full flex justify-between items-center mt-4.75 mb-2.25">
         <div className="flex items-center gap-2">
           <strong>Select All Tabs</strong>
-          <Checkbox checked={allTabsSelected} onChange={(e) => handleSelectAllTabs(e, tabs)} />
+          <Checkbox
+            checked={allTabsSelected}
+            onChange={(e) => handleSelectAllTabs(e, tabs)}
+          />
         </div>
 
         <small className="text-(--primary)">
