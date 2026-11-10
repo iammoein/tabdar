@@ -31,8 +31,23 @@ export default function useBrowserTabs() {
   const allTabsSelected =
     validTabs.length > 0 && validTabs.every((id) => selectedTabIds.has(id));
 
-  const handleSelectAllTabs = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedTabIds(event.target.checked ? new Set(validTabs) : new Set());
+  const handleSelectAllTabs = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    filteredTabs: chrome.tabs.Tab[],
+  ) => {
+    setSelectedTabIds((current) => {
+      const next = new Set(current);
+
+      filteredTabs.forEach((tab) => {
+        if (tab.id === undefined) return;
+
+        if (event.target.checked) {
+          next.add(tab.id);
+        } else next.delete(tab.id);
+      });
+
+      return next;
+    });
   };
 
   const handleSelectTab = (

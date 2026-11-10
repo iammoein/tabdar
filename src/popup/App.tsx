@@ -70,7 +70,7 @@ export default function App() {
       <label className="w-full flex justify-between items-center mt-4.75 mb-2.25">
         <div className="flex items-center gap-2">
           <strong>Select All Tabs</strong>
-          <Checkbox checked={allTabsSelected} onChange={handleSelectAllTabs} />
+          <Checkbox checked={allTabsSelected} onChange={(e) => handleSelectAllTabs(e, tabs)} />
         </div>
 
         <small className="text-(--primary)">
