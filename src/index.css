@@ -147,7 +147,8 @@
     border-color: transparent;
   }
 
-  .button.none:hover {
+  .button.none:hover,
+  .button.none.is-selected {
     background: var(--primary-soft);
     color: var(--primary);
   }
