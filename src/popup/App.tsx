@@ -63,7 +63,7 @@ export default function App() {
 
   return (
     <main className="flex flex-col min-h-screen min-w-120 p-4.5 bg-(--popup-background)">
-      <div className="flex justify-between items-center w-full h-11 py-3 px-3.5 bg-[#262933] border border-(--border) rounded-(--r-md)">
+      <div className="flex justify-between items-center w-full h-11 py-3 px-3.5 bg-(--elevated) border border-(--border) rounded-(--r-md)">
         <strong>{tabs.length} tab open</strong>
         <small>Open in {windows.length} window</small>
       </div>
