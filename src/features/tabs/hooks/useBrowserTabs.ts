@@ -24,6 +24,24 @@ export default function useBrowserTabs() {
     getWindows();
   }, []);
 
+  useEffect(() => {
+    const handleTabRemoved = (tabId: number) => {
+      setTabs((current) => current.filter((tab) => tab.id !== tabId));
+
+      setSelectedTabIds((currentIds) => {
+        const next = new Set(currentIds);
+        next.delete(tabId);
+        return next;
+      });
+    };
+
+    chrome.tabs.onRemoved.addListener(handleTabRemoved);
+
+    return () => {
+      chrome.tabs.onRemoved.removeListener(handleTabRemoved);
+    };
+  }, []);
+
   const validTabs = tabs.flatMap((tab) =>
     tab.id === undefined ? [] : [tab.id],
   );

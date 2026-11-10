@@ -8,6 +8,7 @@ import Icon from "@/shared/components/Icon";
 import Input from "@/shared/components/Input";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { closeTabs } from "@/services/browser/tabs";
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState("");
@@ -33,6 +34,10 @@ export default function Home() {
   const selectedTabs = tabs.filter(
     (tab) => tab.id !== undefined && selectedTabIds.has(tab.id),
   );
+
+  const handleCloseTabs = async (tabIds:Set<number>) => {
+    await closeTabs(tabIds);
+  }
 
   return (
     <div className="w-full bg-(--surface) border border-(--border) rounded-(--r-lg) overflow-hidden">
@@ -80,7 +85,7 @@ export default function Home() {
         </p>
 
         <div className="flex items-center gap-1">
-          <Button variant="danger">
+          <Button variant="danger" onClick={() => handleCloseTabs(selectedTabIds)}>
             <Icon name="close" />
             Close Selected Tabs
           </Button>
