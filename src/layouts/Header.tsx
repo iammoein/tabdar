@@ -1,4 +1,4 @@
-import { useTheme, type Themes } from "@/shared/theme/themeProvider";
+import { useTheme, type Themes } from "@/shared/theme/ThemeProvider";
 import Button from "@/shared/components/Button";
 
 type HeadersProps = {

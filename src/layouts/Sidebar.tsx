@@ -4,9 +4,9 @@ import { NavLink } from "react-router";
 
 export default function Sidebar() {
   return (
-    <aside className="flex flex-col gap-8 h-screen w-62 px-4.5 py-7 bg-(--surface) border-r border-(--surface-hover)">
+    <aside className="flex flex-col gap-8 h-full w-62 px-4.5 py-7 bg-(--surface) border-r border-(--surface-hover)">
       <div className="flex items-center gap-2.75 h-11">
-        <img src="/public/icons/icon48.png" className="size-12" alt="" />
+        <img src="/icons/icon48.png" className="size-12" alt="" />
         <div className="flex flex-col">
           <strong className="text-(--text) text-[18px]">Tabdar</strong>
           <small className="text-(--secondary) text-[11px]">
