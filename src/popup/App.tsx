@@ -12,6 +12,7 @@ import QuickCollection from "@/features/collections/components/QuickCollection";
 import Divider from "@/shared/components/Divider";
 import { restoreTabs } from "@/services/browser/tabs";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { openDashboard } from "@/services/browser/dashboard";
 
 export default function App() {
   const {
@@ -92,7 +93,7 @@ export default function App() {
         <Divider />
       </div>
 
-      <Button variant="none" className="text-(--primary)">
+      <Button variant="none" className="mt-2 text-(--secondary) hover:text-(--primary) hover:bg-transparent" onClick={openDashboard}>
         Go To Tabdar Pannel
       </Button>
     </main>
