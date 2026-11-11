@@ -4,6 +4,7 @@ import type {
 } from "@/features/collections/types/collection.types";
 import Icon from "@/shared/components/Icon";
 import Button from "@/shared/components/Button";
+import CollectionIcon from "@/features/collections/components/CollectionIcon";
 
 type QuickCollectionProps = {
   collections: Collection[];
@@ -28,9 +29,7 @@ export default function QuickCollection({
             key={collection.id}
             className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5"
           >
-            <div className="flex items-center justify-center size-10.5 bg-(--primary-soft) rounded-(--r-lg)">
-              <Icon name="archive" color="var(--primary)" />
-            </div>
+            <CollectionIcon />
             <div className="flex flex-col w-full">
               <strong className="text-(--text) text-[10px]">
                 {collection.title}
@@ -44,7 +43,6 @@ export default function QuickCollection({
               variant="none"
               className="flex size-8 items-center justify-center hover:transform-none"
               onClick={() => {
-                console.log("Button clicked");
                 onRestoreTab(collection.tabs);
               }}
             >
