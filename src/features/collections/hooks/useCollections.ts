@@ -1,5 +1,9 @@
 import type { Collection } from "@/features/collections/types/collection.types";
-import { getCollections, saveCollections } from "@/services/browser/collections";
+import {
+  getCollections,
+  removeCollection,
+  saveCollections,
+} from "@/services/browser/collections";
 import { useEffect, useState } from "react";
 
 export default function useCollections() {
@@ -21,8 +25,20 @@ export default function useCollections() {
     await saveCollections(updatedCollections);
   };
 
+  const handleRemoveCollection = async (collectionId: string) => {
+    await removeCollection(collectionId);
+
+    setCollections((collections) => {
+      const nextCollections = [...collections];
+      return nextCollections.filter(
+        (collection) => collection.id !== collectionId,
+      );
+    });
+  };
+
   return {
     collections,
     handleSaveCollection,
+    handleRemoveCollection,
   };
 }

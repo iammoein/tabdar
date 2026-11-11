@@ -5,6 +5,16 @@ export const getCollections = async (): Promise<Collection[]> => {
   return (result.collections as Collection[] | undefined) ?? [];
 };
 
-export const saveCollections = async (collections: Collection[]):Promise<void> => {
-  await chrome.storage.local.set({collections});
+export const saveCollections = async (
+  collections: Collection[],
+): Promise<void> => {
+  await chrome.storage.local.set({ collections });
+};
+
+export const removeCollection = async (collectionId: string) => {
+  const collections = await getCollections();
+  const updatedCollections: Collection[] = collections.filter(
+    (collection) => collection.id !== collectionId,
+  );
+  await saveCollections(updatedCollections);
 };

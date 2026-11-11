@@ -4,13 +4,17 @@ import CollectionList from "@/features/collections/components/CollectionList";
 import useCollections from "@/features/collections/hooks/useCollections";
 
 export default function Collections() {
-  const { collections } = useCollections();
+  const { collections, handleRemoveCollection } = useCollections();
 
   const handleRestoreTab = async (tabs: CollectionTab[]) => {
     await restoreTabs(tabs);
   };
 
   return (
-    <CollectionList collections={collections} onRestoreTab={handleRestoreTab} />
+    <CollectionList
+      collections={collections}
+      onRestoreTab={handleRestoreTab}
+      onRemoveCollection={handleRemoveCollection}
+    />
   );
 }
