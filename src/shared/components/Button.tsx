@@ -12,7 +12,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button type={type} className={`button ${variant} ${className}`} {...props}>
+    <button type={type} className={`button select-none ${variant} ${className}`} {...props}>
       {children}
     </button>
   );
