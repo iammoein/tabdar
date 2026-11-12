@@ -20,6 +20,7 @@ type CollectionItemProps = {
   onRestoreTab: (tabs: CollectionTab[]) => void;
   onToggleMenu: (id: string) => void;
   onDelete: (id: string) => void;
+  onRename: (id: string) => void;
 };
 
 export default function CollectionItem({
@@ -28,6 +29,7 @@ export default function CollectionItem({
   onRestoreTab,
   onToggleMenu,
   onDelete,
+  onRename,
 }: CollectionItemProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +64,11 @@ export default function CollectionItem({
           {isOpenMenu && (
             <ul className="shadow-(--shadow-card absolute top-full right-0 z-20 mt-2 min-w-44 rounded-(--r-md) border border-(--border) bg-(--surface) p-1 select-none">
               <li>
-                <Button variant="none" className={menuItemClassName}>
+                <Button
+                  variant="none"
+                  className={menuItemClassName}
+                  onClick={() => onRename(id)}
+                >
                   Rename collection
                 </Button>
               </li>

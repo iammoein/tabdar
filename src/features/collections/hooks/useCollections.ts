@@ -26,7 +26,26 @@ export default function useCollections() {
     await saveCollections(updatedCollections);
   };
 
-  const handleRemoveCollection = async (collectionId: string) => {
+  const handleRenameCollection = async (
+    collectionId: string,
+    newTitle: string,
+  ) => {
+    const updatedCollections = collections.map((collection) => {
+      if (collection.id === collectionId) {
+        return {
+          ...collection,
+          title: newTitle,
+        };
+      }
+
+      return collection;
+    });
+
+    await saveCollections(updatedCollections);
+    setCollections(updatedCollections);
+  };
+
+  const handleDeleteCollection = async (collectionId: string) => {
     await removeCollection(collectionId);
 
     setCollections((collections) => {
@@ -56,7 +75,8 @@ export default function useCollections() {
 
   return {
     collections,
+    handleRenameCollection,
     handleSaveCollection,
-    handleRemoveCollection,
+    handleDeleteCollection,
   };
 }

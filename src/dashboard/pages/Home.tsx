@@ -20,8 +20,12 @@ export default function Home() {
   const { tabs, selectedTabIds, handleSelectAllTabs, handleSelectTab } =
     useBrowserTabs();
 
-  const { collections, handleSaveCollection, handleRemoveCollection } =
-    useCollections();
+  const {
+    collections,
+    handleSaveCollection,
+    handleDeleteCollection,
+    handleRenameCollection,
+  } = useCollections();
 
   const filteredTabs = tabs.filter(
     (tab) =>
@@ -149,7 +153,8 @@ export default function Home() {
       <CollectionList
         collections={collections}
         onRestoreTab={handleRestorTab}
-        onRemoveCollection={handleRemoveCollection}
+        onDeleteCollection={handleDeleteCollection}
+        onRenameCollection={handleRenameCollection}
         limit={3}
       />
     </>
