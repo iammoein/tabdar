@@ -1,5 +1,5 @@
-import { useTheme, type Themes } from "@/shared/theme/ThemeProvider";
 import Button from "@/shared/components/Button";
+import { type Themes,useTheme } from "@/shared/theme/ThemeProvider";
 
 type HeadersProps = {
   tabsLength: number;

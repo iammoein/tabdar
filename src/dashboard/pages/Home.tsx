@@ -1,17 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
+import CollectionList from "@/features/collections/components/CollectionList";
+import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
+import useCollections from "@/features/collections/hooks/useCollections";
 import type { CollectionTab } from "@/features/collections/types/collection.types";
-import { closeTabs, restoreTabs } from "@/services/browser/tabs";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
+import { closeTabs, restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
 import Icon from "@/shared/components/Icon";
 import Input from "@/shared/components/Input";
-import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
-import useCollections from "@/features/collections/hooks/useCollections";
-import CollectionList from "@/features/collections/components/CollectionList";
-import { Link } from "react-router";
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState("");
@@ -149,7 +149,7 @@ export default function Home() {
       <CollectionList
         collections={collections}
         onRestoreTab={handleRestorTab}
-        onRemoveColletion={handleRemoveCollection}
+        onRemoveCollection={handleRemoveCollection}
         limit={3}
       />
     </>

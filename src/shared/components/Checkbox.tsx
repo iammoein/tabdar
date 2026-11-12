@@ -1,4 +1,5 @@
 import type { ChangeEventHandler } from "react";
+
 import Icon from "@/shared/components/Icon";
 
 type CheckboxProps = {

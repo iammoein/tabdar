@@ -1,5 +1,6 @@
+import { type ChangeEventHandler,useState } from "react";
+
 import Checkbox from "@/shared/components/Checkbox";
-import { useState, type ChangeEventHandler } from "react";
 
 type TabProps = {
   title: string;
@@ -27,8 +28,8 @@ export default function BrowserTabItem({
 
   try {
     hostname = new URL(tabUrl).hostname;
-  } catch (e) {
-    console.warn("آدرس تب معتبر نیست:", tabUrl);
+  } catch (error) {
+    console.warn(error, tabUrl);
   }
 
   return (

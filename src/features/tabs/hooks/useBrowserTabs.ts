@@ -1,5 +1,6 @@
+import { useEffect,useState } from "react";
+
 import { getBrowserTabs, getBrowserWindows } from "@/services/browser/tabs";
-import { useState, useEffect } from "react";
 
 export default function useBrowserTabs() {
   const [tabs, setTabs] = useState<chrome.tabs.Tab[]>([]);

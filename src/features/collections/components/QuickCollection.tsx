@@ -1,10 +1,10 @@
+import CollectionIcon from "@/features/collections/components/CollectionIcon";
 import type {
   Collection,
   CollectionTab,
 } from "@/features/collections/types/collection.types";
-import Icon from "@/shared/components/Icon";
 import Button from "@/shared/components/Button";
-import CollectionIcon from "@/features/collections/components/CollectionIcon";
+import Icon from "@/shared/components/Icon";
 
 type QuickCollectionProps = {
   collections: Collection[];

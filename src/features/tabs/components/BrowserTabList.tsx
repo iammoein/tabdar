@@ -1,5 +1,6 @@
-import BrowserTabItem from "@/features/tabs/components/BrowserTabItem";
 import type { ChangeEvent } from "react";
+
+import BrowserTabItem from "@/features/tabs/components/BrowserTabItem";
 
 type TabListProps = {
   tabs: chrome.tabs.Tab[];

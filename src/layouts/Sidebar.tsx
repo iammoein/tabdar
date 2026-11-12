@@ -1,6 +1,7 @@
+import { NavLink } from "react-router";
+
 import { dashboardNavigation } from "@/dashboard/navigation";
 import Icon from "@/shared/components/Icon";
-import { NavLink } from "react-router";
 
 export default function Sidebar() {
   return (

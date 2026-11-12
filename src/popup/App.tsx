@@ -1,18 +1,17 @@
 import { useState } from "react";
 
-import type { CollectionTab } from "@/features/collections/types/collection.types";
+import QuickCollection from "@/features/collections/components/QuickCollection";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
+import useCollections from "@/features/collections/hooks/useCollections";
+import type { CollectionTab } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
+import { openDashboard } from "@/services/browser/dashboard";
+import { restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
-import Icon from "@/shared/components/Icon";
-
-import QuickCollection from "@/features/collections/components/QuickCollection";
 import Divider from "@/shared/components/Divider";
-import { restoreTabs } from "@/services/browser/tabs";
-import useCollections from "@/features/collections/hooks/useCollections";
-import { openDashboard } from "@/services/browser/dashboard";
+import Icon from "@/shared/components/Icon";
 
 export default function App() {
   const {

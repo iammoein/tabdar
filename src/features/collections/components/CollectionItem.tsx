@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
+
+import CollectionIcon from "@/features/collections/components/CollectionIcon";
 import type {
   Collection,
   CollectionTab,
 } from "@/features/collections/types/collection.types";
-
-import CollectionIcon from "@/features/collections/components/CollectionIcon";
-import Icon from "@/shared/components/Icon";
 import Button from "@/shared/components/Button";
+import Icon from "@/shared/components/Icon";
 import formatDate from "@/shared/utils/formatDate";
 
 const menuItemBaseClassName =

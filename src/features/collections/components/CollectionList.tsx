@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import CollectionItem from "@/features/collections/components/CollectionItem";
 import type {
   Collection,
   CollectionTab,
 } from "@/features/collections/types/collection.types";
-import CollectionItem from "@/features/collections/components/CollectionItem";
 
 type CollectionListProps = {
   collections: Collection[];

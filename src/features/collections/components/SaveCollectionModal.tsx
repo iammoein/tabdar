@@ -1,10 +1,11 @@
+import { useState } from "react";
+
 import type { Collection, CollectionTab } from "@/features/collections/types/collection.types";
 import Button from "@/shared/components/Button";
 import Icon from "@/shared/components/Icon";
 import Input from "@/shared/components/Input";
-import Textarea from "@/shared/components/Textarea";
 import Modal from "@/shared/components/Modal";
-import { useState } from "react";
+import Textarea from "@/shared/components/Textarea";
 
 type ModalProps = {
   selectedTabLength: number;

@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
+
 import type { Collection } from "@/features/collections/types/collection.types";
 import {
   getCollections,
   removeCollection,
   saveCollections,
 } from "@/services/browser/collections";
-import { useEffect, useState } from "react";
 
 export default function useCollections() {
   const [collections, setCollections] = useState<Collection[]>([]);
