@@ -87,18 +87,22 @@ export default function App() {
         <QuickCollection
           collections={collections}
           onRestoreTab={handleRestorTab}
+          onSeeAll={() => openDashboard("collections")}
         />
-
-        <Divider />
       </div>
 
-      <Button
-        variant="none"
-        className="mt-2 text-(--secondary) hover:bg-transparent hover:text-(--primary)"
-        onClick={openDashboard}
-      >
-        Go To Tabdar Pannel
-      </Button>
+      <div className="flex flex-col items-center gap-3">
+        <Divider />
+
+        <Button
+          variant="none"
+          className="mt-2 text-(--secondary) hover:bg-transparent hover:text-(--primary)"
+          onClick={() => openDashboard()}
+        >
+          Go To Tabdar Pannel
+          <Icon name="external" />
+        </Button>
+      </div>
     </main>
   );
 }

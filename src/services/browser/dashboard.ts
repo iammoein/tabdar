@@ -1,5 +1,5 @@
-export const openDashboard = () => {
+export const openDashboard = (path = "") => {
   return chrome.tabs.create({
-    url: chrome.runtime.getURL("dashboard.html"),
+    url: `${chrome.runtime.getURL("dashboard.html")}#/${path}`,
   });
 };

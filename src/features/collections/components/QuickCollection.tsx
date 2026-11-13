@@ -9,18 +9,26 @@ import Icon from "@/shared/components/Icon";
 type QuickCollectionProps = {
   collections: Collection[];
   onRestoreTab: (tabs: CollectionTab[]) => void;
+  onSeeAll: () => void;
 };
 
 export default function QuickCollection({
   collections,
   onRestoreTab,
+  onSeeAll,
 }: QuickCollectionProps) {
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="flex items-center justify-between">
         <strong className="text-[12px] text-(--text)">Last Collection</strong>
 
-        <span className="text-(--primary)">See All</span>
+        <Button
+          variant="none"
+          className="text-(--primary) hover:text-(--primary-hover)"
+          onClick={onSeeAll}
+        >
+          See All
+        </Button>
       </div>
 
       <ul className="flex flex-col gap-4 p-1">
