@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 import CollectionItem from "@/features/collections/components/CollectionItem";
+import RenameCollectionModal from "@/features/collections/components/RenameCollectionModal";
 import type {
   Collection,
   CollectionTab,
 } from "@/features/collections/types/collection.types";
-
-import RenameCollectionModal from "@/features/collections/components/RenameCollectionModal";
 
 type CollectionListProps = {
   collections: Collection[];

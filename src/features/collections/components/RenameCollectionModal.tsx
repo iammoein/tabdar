@@ -1,4 +1,4 @@
-import { useState, type SubmitEvent } from "react";
+import { type SubmitEvent,useState } from "react";
 
 import Button from "@/shared/components/Button";
 import Input from "@/shared/components/Input";
