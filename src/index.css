@@ -1,22 +1,5 @@
 @import "tailwindcss";
 
-.tab-list-scroll {
-  overscroll-behavior: contain;
-  margin: 0 -4px 13px;
-  padding: 0 4px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--muted) transparent;
-}
-
-.tab-list-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.tab-list-scroll::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 999px;
-}
-
 :root {
   --primary: #193f8f;
   --primary-hover: #153575;

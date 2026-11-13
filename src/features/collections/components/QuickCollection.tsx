@@ -16,22 +16,22 @@ export default function QuickCollection({
   onRestoreTab,
 }: QuickCollectionProps) {
   return (
-    <div className="w-full flex flex-col gap-2">
-      <div className="flex justify-between items-center">
-        <strong className="text-(--text) text-[12px]">Last Collection</strong>
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between">
+        <strong className="text-[12px] text-(--text)">Last Collection</strong>
 
         <span className="text-(--primary)">See All</span>
       </div>
 
-      <ul className="tab-list-scroll flex flex-col gap-4 max-h-77 overflow-y-auto p-1">
+      <ul className="flex flex-col gap-4 p-1">
         {collections.map((collection) => (
           <li
             key={collection.id}
             className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5"
           >
             <CollectionIcon />
-            <div className="flex flex-col w-full">
-              <strong className="text-(--text) text-[10px]">
+            <div className="flex w-full flex-col">
+              <strong className="text-[10px] text-(--text)">
                 {collection.title}
               </strong>
               <small className="text-(--muted)">

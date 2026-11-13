@@ -17,7 +17,7 @@ export default function BrowserTabList({
   handleSelectTab,
 }: TabListProps) {
   return (
-    <ul className="tab-list-scroll flex flex-col gap-1 max-h-77 overflow-y-auto p-1">
+    <ul className="flex flex-col gap-1 p-1">
       {tabs.map((tab) => (
         <li key={tab.id}>
           <BrowserTabItem

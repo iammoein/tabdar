@@ -42,12 +42,12 @@ export default function App() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen min-w-120 p-4.5 bg-(--popup-background)">
-      <div className="flex justify-between items-center w-full h-11 py-3 px-3.5 bg-(--elevated) border border-(--border) rounded-(--r-md)">
+    <main className="flex max-h-150 w-100 flex-col gap-3 overflow-y-auto overscroll-contain bg-(--popup-background) p-4.5">
+      <div className="flex h-11 w-full items-center justify-between rounded-(--r-md) border border-(--border) bg-(--elevated) px-3.5 py-3">
         <strong>{tabs.length} tab open</strong>
         <small>Open in {windows.length} window</small>
       </div>
-      <label className="w-full flex justify-between items-center mt-4.75 mb-2.25">
+      <label className="mt-4.75 mb-2.25 flex w-full items-center justify-between">
         <div className="flex items-center gap-2">
           <strong>Select All Tabs</strong>
           <Checkbox
@@ -81,7 +81,7 @@ export default function App() {
         Save {selectedTabsLength} selected Tab
       </Button>
 
-      <div className="flex flex-col justify-center gap-3 mt-3">
+      <div className="mt-3 flex flex-col justify-center gap-3">
         <Divider />
 
         <QuickCollection
@@ -92,7 +92,11 @@ export default function App() {
         <Divider />
       </div>
 
-      <Button variant="none" className="mt-2 text-(--secondary) hover:text-(--primary) hover:bg-transparent" onClick={openDashboard}>
+      <Button
+        variant="none"
+        className="mt-2 text-(--secondary) hover:bg-transparent hover:text-(--primary)"
+        onClick={openDashboard}
+      >
         Go To Tabdar Pannel
       </Button>
     </main>
