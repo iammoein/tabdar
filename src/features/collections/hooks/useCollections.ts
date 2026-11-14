@@ -45,6 +45,30 @@ export default function useCollections() {
     setCollections(updatedCollections);
   };
 
+  const handleDuplicateCollection = async (collectionId: string) => {
+    const index = collections.findIndex(
+      (collection) => collection.id === collectionId,
+    );
+    if (index === -1) return collections;
+
+    const copy = {
+      ...collections[index],
+      id: crypto.randomUUID(),
+      title: `${collections[index].title} Copy`,
+      tabs: collections[index].tabs.map((tab) => ({ ...tab })),
+      createdAt: new Date().toISOString(),
+    };
+
+    const duplicatedCollection: Collection[] = [
+      ...collections.slice(0, index + 1),
+      copy,
+      ...collections.slice(index + 1),
+    ];
+
+    await saveCollections(duplicatedCollection);
+    setCollections(duplicatedCollection);
+  };
+
   const handleDeleteCollection = async (collectionId: string) => {
     await removeCollection(collectionId);
 
@@ -78,5 +102,6 @@ export default function useCollections() {
     handleRenameCollection,
     handleSaveCollection,
     handleDeleteCollection,
+    handleDuplicateCollection,
   };
 }

@@ -25,6 +25,7 @@ export default function Home() {
     handleSaveCollection,
     handleDeleteCollection,
     handleRenameCollection,
+    handleDuplicateCollection,
   } = useCollections();
 
   const filteredTabs = tabs.filter(
@@ -155,6 +156,7 @@ export default function Home() {
         onRestoreTab={handleRestorTab}
         onDeleteCollection={handleDeleteCollection}
         onRenameCollection={handleRenameCollection}
+        onDuplicationCollection={handleDuplicateCollection}
         limit={3}
       />
     </>

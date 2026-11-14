@@ -12,6 +12,7 @@ type CollectionListProps = {
   onRestoreTab: (tabs: CollectionTab[]) => void;
   onRenameCollection: (id: string, newTitle: string) => void;
   onDeleteCollection: (id: string) => void;
+  onDuplicationCollection: (id: string) => void;
   limit?: number;
 };
 
@@ -20,6 +21,7 @@ export default function CollectionList({
   onRestoreTab,
   onRenameCollection,
   onDeleteCollection,
+  onDuplicationCollection,
   limit,
 }: CollectionListProps) {
   const [openMenuCollectionId, setOpenMenuCollectionId] = useState<
@@ -56,6 +58,7 @@ export default function CollectionList({
               onToggleMenu={toggleMenu}
               onDelete={onDeleteCollection}
               onRename={handleRename}
+              onDuplicate={onDuplicationCollection}
               isOpenMenu={collection.id === openMenuCollectionId}
             />
           </li>

@@ -21,6 +21,7 @@ type CollectionItemProps = {
   onToggleMenu: (id: string) => void;
   onDelete: (id: string) => void;
   onRename: (id: string) => void;
+  onDuplicate: (id: string) => void;
 };
 
 export default function CollectionItem({
@@ -30,6 +31,7 @@ export default function CollectionItem({
   onToggleMenu,
   onDelete,
   onRename,
+  onDuplicate,
 }: CollectionItemProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -73,7 +75,11 @@ export default function CollectionItem({
                 </Button>
               </li>
               <li>
-                <Button variant="none" className={menuItemClassName}>
+                <Button
+                  variant="none"
+                  className={menuItemClassName}
+                  onClick={() => onDuplicate(id)}
+                >
                   Duplicate collection
                 </Button>
               </li>

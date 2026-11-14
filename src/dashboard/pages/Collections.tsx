@@ -6,8 +6,12 @@ import Button from "@/shared/components/Button";
 import Icon from "@/shared/components/Icon";
 
 export default function Collections() {
-  const { collections, handleDeleteCollection, handleRenameCollection } =
-    useCollections();
+  const {
+    collections,
+    handleDeleteCollection,
+    handleRenameCollection,
+    handleDuplicateCollection,
+  } = useCollections();
 
   const handleRestoreTab = async (tabs: CollectionTab[]) => {
     await restoreTabs(tabs);
@@ -37,6 +41,7 @@ export default function Collections() {
         onRestoreTab={handleRestoreTab}
         onDeleteCollection={handleDeleteCollection}
         onRenameCollection={handleRenameCollection}
+        onDuplicationCollection={handleDuplicateCollection}
       />
     </div>
   );
