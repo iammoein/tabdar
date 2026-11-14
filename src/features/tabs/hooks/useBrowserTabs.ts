@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getBrowserTabs, getBrowserWindows } from "@/services/browser/tabs";
 
@@ -85,6 +85,10 @@ export default function useBrowserTabs() {
     });
   };
 
+  const handleClearSelectedTabs = () => {
+    setSelectedTabIds(new Set());
+  };
+
   return {
     tabs,
     windows,
@@ -92,5 +96,6 @@ export default function useBrowserTabs() {
     allTabsSelected,
     handleSelectAllTabs,
     handleSelectTab,
+    handleClearSelectedTabs,
   };
 }

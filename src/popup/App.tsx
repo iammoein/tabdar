@@ -3,7 +3,10 @@ import { useState } from "react";
 import QuickCollection from "@/features/collections/components/QuickCollection";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import useCollections from "@/features/collections/hooks/useCollections";
-import type { CollectionTab } from "@/features/collections/types/collection.types";
+import type {
+  Collection,
+  CollectionTab,
+} from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
 import { openDashboard } from "@/services/browser/dashboard";
@@ -14,6 +17,8 @@ import Divider from "@/shared/components/Divider";
 import Icon from "@/shared/components/Icon";
 
 export default function App() {
+  const [isSaveModal, setisSaveModal] = useState(false);
+
   const {
     tabs,
     windows,
@@ -21,9 +26,8 @@ export default function App() {
     allTabsSelected,
     handleSelectAllTabs,
     handleSelectTab,
+    handleClearSelectedTabs,
   } = useBrowserTabs();
-
-  const [isSaveModal, setisSaveModal] = useState(false);
 
   const selectedTabsLength = selectedTabIds.size;
 
@@ -35,6 +39,12 @@ export default function App() {
 
   const handleSaveTabs = () => {
     setisSaveModal(true);
+  };
+
+  const handleSave = async (collection: Collection) => {
+    await handleSaveCollection(collection);
+
+    handleClearSelectedTabs();
   };
 
   const handleRestorTab = async (tabs: CollectionTab[]) => {
@@ -65,7 +75,7 @@ export default function App() {
         <SaveCollectionModal
           selectedTabLength={selectedTabsLength}
           selectedTabs={selectedTabs}
-          onSave={handleSaveCollection}
+          onSave={handleSave}
           onClose={() => setisSaveModal(false)}
         />
       )}
