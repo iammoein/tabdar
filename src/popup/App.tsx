@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import QuickCollection from "@/features/collections/components/QuickCollection";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
@@ -8,7 +8,8 @@ import type {
   CollectionTab,
 } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
-import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
+import { initTabsStore } from "@/features/tabs/store/initTabsStore";
+import { useTabsStore } from "@/features/tabs/store/useTabsStore";
 import { openDashboard } from "@/services/browser/dashboard";
 import { restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
@@ -19,15 +20,20 @@ import Icon from "@/shared/components/Icon";
 export default function App() {
   const [isSaveModal, setisSaveModal] = useState(false);
 
-  const {
-    tabs,
-    windows,
-    selectedTabIds,
-    allTabsSelected,
-    handleSelectAllTabs,
-    handleSelectTab,
-    handleClearSelectedTabs,
-  } = useBrowserTabs();
+  useEffect(() => initTabsStore(), []);
+
+  const tabs = useTabsStore((state) => state.tabs);
+  const windows = useTabsStore((state) => state.windows);
+  const selectedTabIds = useTabsStore((state) => state.selectedTabIds);
+  const selectAllTabs = useTabsStore((state) => state.selectAllTabs);
+  const selectTab = useTabsStore((state) => state.selectTab);
+  const clearSelectedTabs = useTabsStore((state) => state.clearSelectedTabs);
+
+  const validTabs = tabs.flatMap((tab) =>
+    tab.id === undefined ? [] : [tab.id],
+  );
+  const allTabsSelected =
+    validTabs.length > 0 && validTabs.every((id) => selectedTabIds.has(id));
 
   const selectedTabsLength = selectedTabIds.size;
 
@@ -44,7 +50,7 @@ export default function App() {
   const handleSave = async (collection: Collection) => {
     await handleSaveCollection(collection);
 
-    handleClearSelectedTabs();
+    clearSelectedTabs();
   };
 
   const handleRestorTab = async (tabs: CollectionTab[]) => {
@@ -62,7 +68,7 @@ export default function App() {
           <strong>Select All Tabs</strong>
           <Checkbox
             checked={allTabsSelected}
-            onChange={(e) => handleSelectAllTabs(e, tabs)}
+            onChange={(e) => selectAllTabs(tabs, e.target.checked)}
           />
         </div>
 
@@ -83,7 +89,7 @@ export default function App() {
       <BrowserTabList
         tabs={tabs}
         selectedTabIds={selectedTabIds}
-        handleSelectTab={handleSelectTab}
+        handleSelectTab={(event, id) => selectTab(id, event.target.checked)}
       />
 
       <Button onClick={handleSaveTabs}>

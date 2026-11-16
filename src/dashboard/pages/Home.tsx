@@ -6,7 +6,7 @@ import SaveCollectionModal from "@/features/collections/components/SaveCollectio
 import useCollections from "@/features/collections/hooks/useCollections";
 import type { CollectionTab } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
-import useBrowserTabs from "@/features/tabs/hooks/useBrowserTabs";
+import { useTabsStore } from "@/features/tabs/store/useTabsStore";
 import { closeTabs, restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
@@ -17,8 +17,10 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState("");
   const [isSaveModal, setIsSaveModal] = useState(false);
 
-  const { tabs, selectedTabIds, handleSelectAllTabs, handleSelectTab } =
-    useBrowserTabs();
+  const tabs = useTabsStore((state) => state.tabs);
+  const selectedTabIds = useTabsStore((state) => state.selectedTabIds);
+  const selectAllTabs = useTabsStore((state) => state.selectAllTabs);
+  const selectTab = useTabsStore((state) => state.selectTab);
 
   const {
     collections,
@@ -87,7 +89,7 @@ export default function Home() {
             <span className="flex gap-2.25">
               <Checkbox
                 checked={filteredTabsSelected}
-                onChange={(e) => handleSelectAllTabs(e, filteredTabs)}
+                onChange={(e) => selectAllTabs(filteredTabs, e.target.checked)}
               />
               <small className="text-[11px] text-(--secondary)">
                 Select all
@@ -97,11 +99,13 @@ export default function Home() {
               {filteredTabs.length} shown tab
             </small>
           </div>
-          <div className="p-4">
+          <div className="max-h-100 overflow-y-auto p-4">
             <BrowserTabList
               tabs={filteredTabs}
               selectedTabIds={selectedTabIds}
-              handleSelectTab={handleSelectTab}
+              handleSelectTab={(event, id) =>
+                selectTab(id, event.target.checked)
+              }
             />
           </div>
         </div>
