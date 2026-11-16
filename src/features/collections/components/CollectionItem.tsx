@@ -17,7 +17,9 @@ const destructiveMenuItemClassName = `${menuItemBaseClassName} text-(--danger) h
 type CollectionItemProps = {
   collection: Collection;
   isOpenMenu: boolean;
-  onRestoreTab: (tabs: CollectionTab[]) => void;
+  isCloseBtn: boolean;
+  onRestoreTab: (id: string, tabs: CollectionTab[]) => void;
+  onCloseTab: (id: string) => void;
   onToggleMenu: (id: string) => void;
   onDelete: (id: string) => void;
   onRename: (id: string) => void;
@@ -27,7 +29,9 @@ type CollectionItemProps = {
 export default function CollectionItem({
   collection: { id, title, description, tabs, createdAt },
   isOpenMenu,
+  isCloseBtn,
   onRestoreTab,
+  onCloseTab,
   onToggleMenu,
   onDelete,
   onRename,
@@ -114,14 +118,25 @@ export default function CollectionItem({
         </span>
       </div>
 
-      <Button
-        variant="secondary"
-        className="flex w-full gap-2"
-        onClick={() => onRestoreTab(tabs)}
-      >
-        <Icon name="external" />
-        Open Tabs
-      </Button>
+      {!isCloseBtn ? (
+        <Button
+          variant="secondary"
+          className="flex w-full gap-2"
+          onClick={() => onRestoreTab(id, tabs)}
+        >
+          <Icon name="external" />
+          Open Tabs
+        </Button>
+      ) : (
+        <Button
+          variant="danger"
+          className="flex w-full gap-2"
+          onClick={() => onCloseTab(id)}
+        >
+          <Icon name="close" />
+          Close Tabs
+        </Button>
+      )}
     </article>
   );
 }

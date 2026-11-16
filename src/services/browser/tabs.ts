@@ -6,17 +6,23 @@ export async function getBrowserWindows() {
   return await chrome.windows.getAll();
 }
 
-export async function closeTabs(ids: Set<number>) {
-  const tabIds = [...ids];
-  await chrome.tabs.remove(tabIds);
+export async function closeTabs(ids: number[]) {
+  await chrome.tabs.remove(ids);
 }
 
 type RestoreTab = {
   url: string;
 };
 
-export async function restoreTabs(tabs: RestoreTab[]): Promise<void> {
+export async function restoreTabs(tabs: RestoreTab[]): Promise<number[]> {
+  const restorTabIds: number[] = [];
+
   for (const tab of tabs) {
-    await chrome.tabs.create({ url: tab.url, active: false });
+    const createTab = await chrome.tabs.create({ url: tab.url, active: false });
+
+    if (createTab.id !== undefined) {
+      restorTabIds.push(createTab.id);
+    }
   }
+  return restorTabIds;
 }

@@ -1,7 +1,8 @@
 import CollectionList from "@/features/collections/components/CollectionList";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { useCollectionsStore } from "@/features/collections/store/useCollectionsStore";
 import type { CollectionTab } from "@/features/collections/types/collection.types";
-import { restoreTabs } from "@/services/browser/tabs";
+import { closeTabs, restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
 import Icon from "@/shared/components/Icon";
 
@@ -13,8 +14,32 @@ export default function Collections() {
     handleDuplicateCollection,
   } = useCollections();
 
-  const handleRestoreTab = async (tabs: CollectionTab[]) => {
-    await restoreTabs(tabs);
+  const restoredCollections = useCollectionsStore(
+    (state) => state.restoredCollections,
+  );
+
+  const addRestoredTabs = useCollectionsStore((state) => state.addRestoredTabs);
+
+  const removeRestoredTabs = useCollectionsStore(
+    (state) => state.removeRestoredTabs,
+  );
+
+  const handleRestoreTab = async (
+    collectionId: string,
+    tabs: CollectionTab[],
+  ) => {
+    const restoreTabIds = await restoreTabs(tabs);
+    addRestoredTabs(collectionId, restoreTabIds);
+  };
+
+  const handleCloseTab = async (collectionId: string) => {
+    const tabIds = restoredCollections[collectionId];
+
+    if (!tabIds?.length) return;
+
+    await closeTabs(tabIds);
+
+    removeRestoredTabs(collectionId);
   };
 
   return (
@@ -38,7 +63,9 @@ export default function Collections() {
 
       <CollectionList
         collections={collections}
+        restoredCollections={restoredCollections}
         onRestoreTab={handleRestoreTab}
+        onCloseTab={handleCloseTab}
         onDeleteCollection={handleDeleteCollection}
         onRenameCollection={handleRenameCollection}
         onDuplicationCollection={handleDuplicateCollection}

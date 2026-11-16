@@ -9,7 +9,9 @@ import type {
 
 type CollectionListProps = {
   collections: Collection[];
-  onRestoreTab: (tabs: CollectionTab[]) => void;
+  restoredCollections: Record<string, number[]>;
+  onRestoreTab: (id: string, tabs: CollectionTab[]) => void;
+  onCloseTab: (id: string) => void;
   onRenameCollection: (id: string, newTitle: string) => void;
   onDeleteCollection: (id: string) => void;
   onDuplicationCollection: (id: string) => void;
@@ -18,7 +20,9 @@ type CollectionListProps = {
 
 export default function CollectionList({
   collections,
+  restoredCollections,
   onRestoreTab,
+  onCloseTab,
   onRenameCollection,
   onDeleteCollection,
   onDuplicationCollection,
@@ -50,19 +54,26 @@ export default function CollectionList({
   return (
     <>
       <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
-        {visibleCollections.map((collection) => (
-          <li key={collection.id}>
-            <CollectionItem
-              collection={collection}
-              onRestoreTab={onRestoreTab}
-              onToggleMenu={toggleMenu}
-              onDelete={onDeleteCollection}
-              onRename={handleRename}
-              onDuplicate={onDuplicationCollection}
-              isOpenMenu={collection.id === openMenuCollectionId}
-            />
-          </li>
-        ))}
+        {visibleCollections.map((collection) => {
+          const isCloseBtn =
+            (restoredCollections[collection.id]?.length ?? 0) > 0;
+
+          return (
+            <li key={collection.id}>
+              <CollectionItem
+                collection={collection}
+                isCloseBtn={isCloseBtn}
+                onRestoreTab={onRestoreTab}
+                onCloseTab={() => onCloseTab(collection.id)}
+                onToggleMenu={toggleMenu}
+                onDelete={onDeleteCollection}
+                onRename={handleRename}
+                onDuplicate={onDuplicationCollection}
+                isOpenMenu={collection.id === openMenuCollectionId}
+              />
+            </li>
+          );
+        })}
       </ul>
 
       {isRenameCollection && (

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import CollectionList from "@/features/collections/components/CollectionList";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { useCollectionsStore } from "@/features/collections/store/useCollectionsStore";
 import type { CollectionTab } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import { useTabsStore } from "@/features/tabs/store/useTabsStore";
@@ -21,6 +22,13 @@ export default function Home() {
   const selectedTabIds = useTabsStore((state) => state.selectedTabIds);
   const selectAllTabs = useTabsStore((state) => state.selectAllTabs);
   const selectTab = useTabsStore((state) => state.selectTab);
+  const restoredCollections = useCollectionsStore(
+    (state) => state.restoredCollections,
+  );
+  const addRestoredTabs = useCollectionsStore((state) => state.addRestoredTabs);
+  const removeRestoredTabs = useCollectionsStore(
+    (state) => state.removeRestoredTabs,
+  );
 
   const {
     collections,
@@ -47,11 +55,24 @@ export default function Home() {
   );
 
   const handleCloseTabs = async (tabIds: Set<number>) => {
-    await closeTabs(tabIds);
+    await closeTabs([...tabIds]);
   };
 
-  const handleRestorTab = async (tabs: CollectionTab[]) => {
-    await restoreTabs(tabs);
+  const handleRestorTab = async (
+    collectionId: string,
+    tabs: CollectionTab[],
+  ) => {
+    const restoredTabIds = await restoreTabs(tabs);
+    addRestoredTabs(collectionId, restoredTabIds);
+  };
+
+  const handleCloseCollectionTabs = async (collectionId: string) => {
+    const tabIds = restoredCollections[collectionId];
+
+    if (!tabIds?.length) return;
+
+    await closeTabs(tabIds);
+    removeRestoredTabs(collectionId);
   };
 
   return (
@@ -157,7 +178,9 @@ export default function Home() {
 
       <CollectionList
         collections={collections}
+        restoredCollections={restoredCollections}
         onRestoreTab={handleRestorTab}
+        onCloseTab={handleCloseCollectionTabs}
         onDeleteCollection={handleDeleteCollection}
         onRenameCollection={handleRenameCollection}
         onDuplicationCollection={handleDuplicateCollection}
