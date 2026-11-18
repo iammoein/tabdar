@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import QuickCollection from "@/features/collections/components/QuickCollection";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { useCollectionsStore } from "@/features/collections/store/useCollectionsStore";
 import type {
   Collection,
   CollectionTab,
@@ -11,7 +12,7 @@ import BrowserTabList from "@/features/tabs/components/BrowserTabList";
 import { initTabsStore } from "@/features/tabs/store/initTabsStore";
 import { useTabsStore } from "@/features/tabs/store/useTabsStore";
 import { openDashboard } from "@/services/browser/dashboard";
-import { restoreTabs } from "@/services/browser/tabs";
+import { closeTabs, restoreTabs } from "@/services/browser/tabs";
 import Button from "@/shared/components/Button";
 import Checkbox from "@/shared/components/Checkbox";
 import Divider from "@/shared/components/Divider";
@@ -28,6 +29,16 @@ export default function App() {
   const selectAllTabs = useTabsStore((state) => state.selectAllTabs);
   const selectTab = useTabsStore((state) => state.selectTab);
   const clearSelectedTabs = useTabsStore((state) => state.clearSelectedTabs);
+
+  const addRestoredTabs = useCollectionsStore((state) => state.addRestoredTabs);
+
+  const restoredCollections = useCollectionsStore(
+    (state) => state.restoredCollections,
+  );
+
+  const removeRestoredTabs = useCollectionsStore(
+    (state) => state.removeRestoredTabs,
+  );
 
   const validTabs = tabs.flatMap((tab) =>
     tab.id === undefined ? [] : [tab.id],
@@ -53,8 +64,22 @@ export default function App() {
     clearSelectedTabs();
   };
 
-  const handleRestorTab = async (tabs: CollectionTab[]) => {
-    await restoreTabs(tabs);
+  const handleRestorTab = async (
+    collectionId: string,
+    tabs: CollectionTab[],
+  ) => {
+    const restoreTabIds = await restoreTabs(tabs);
+    addRestoredTabs(collectionId, restoreTabIds);
+  };
+
+  const handleCloseTab = async (collectionId: string) => {
+    const tabIds = restoredCollections[collectionId];
+
+    if (!tabIds?.length) return;
+
+    await closeTabs(tabIds);
+
+    removeRestoredTabs(collectionId);
   };
 
   return (
@@ -102,8 +127,10 @@ export default function App() {
 
         <QuickCollection
           collections={collections}
+          restoredCollections={restoredCollections}
           onRestoreTab={handleRestorTab}
           onSeeAll={() => openDashboard("collections")}
+          onCloseTab={handleCloseTab}
         />
       </div>
 

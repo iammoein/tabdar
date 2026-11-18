@@ -8,13 +8,17 @@ import Icon from "@/shared/components/Icon";
 
 type QuickCollectionProps = {
   collections: Collection[];
-  onRestoreTab: (tabs: CollectionTab[]) => void;
+  restoredCollections: Record<string, number[]>;
+  onRestoreTab: (id: string, tabs: CollectionTab[]) => void;
+  onCloseTab: (id: string) => void;
   onSeeAll: () => void;
 };
 
 export default function QuickCollection({
   collections,
+  restoredCollections,
   onRestoreTab,
+  onCloseTab,
   onSeeAll,
 }: QuickCollectionProps) {
   return (
@@ -32,32 +36,49 @@ export default function QuickCollection({
       </div>
 
       <ul className="flex flex-col gap-4 p-1">
-        {collections.map((collection) => (
-          <li
-            key={collection.id}
-            className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5"
-          >
-            <CollectionIcon />
-            <div className="flex w-full flex-col">
-              <strong className="text-[10px] text-(--text)">
-                {collection.title}
-              </strong>
-              <small className="text-(--muted)">
-                {collection.tabs.length} tab
-              </small>
-            </div>
+        {collections.map((collection) => {
+          const isCloseBtn =
+            (restoredCollections[collection.id]?.length ?? 0) > 0;
 
-            <Button
-              variant="none"
-              className="flex size-8 items-center justify-center hover:transform-none"
-              onClick={() => {
-                onRestoreTab(collection.tabs);
-              }}
+          return (
+            <li
+              key={collection.id}
+              className="grid grid-cols-[36px_1fr_34px] items-center gap-3 rounded-(--r-md) border border-(--border) bg-(--surface-subtle) p-2.5"
             >
-              <Icon name="external" />
-            </Button>
-          </li>
-        ))}
+              <CollectionIcon />
+              <div className="flex w-full flex-col">
+                <strong className="text-[10px] text-(--text)">
+                  {collection.title}
+                </strong>
+                <small className="text-(--muted)">
+                  {collection.tabs.length} tab
+                </small>
+              </div>
+
+              {!isCloseBtn ? (
+                <Button
+                  variant="none"
+                  className="flex size-8 items-center justify-center hover:transform-none"
+                  onClick={() => {
+                    onRestoreTab(collection.id, collection.tabs);
+                  }}
+                >
+                  <Icon name="external" />
+                </Button>
+              ) : (
+                <Button
+                  variant="none"
+                  className="flex size-8 items-center justify-center border border-(--danger-soft) text-(--danger) hover:transform-none hover:bg-(--danger-soft)"
+                  onClick={() => {
+                    onCloseTab(collection.id);
+                  }}
+                >
+                  <Icon name="close" />
+                </Button>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
