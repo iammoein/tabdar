@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import QuickCollection from "@/features/collections/components/QuickCollection";
 import SaveCollectionModal from "@/features/collections/components/SaveCollectionModal";
 import useCollections from "@/features/collections/hooks/useCollections";
+import { useRestoredTabsSync } from "@/features/collections/hooks/useRestoredTabsSync";
 import { useCollectionsStore } from "@/features/collections/store/useCollectionsStore";
 import type {
   Collection,
   CollectionTab,
 } from "@/features/collections/types/collection.types";
 import BrowserTabList from "@/features/tabs/components/BrowserTabList";
-import { initTabsStore } from "@/features/tabs/store/initTabsStore";
 import { useTabsStore } from "@/features/tabs/store/useTabsStore";
 import { openDashboard } from "@/services/browser/dashboard";
 import { closeTabs, restoreTabs } from "@/services/browser/tabs";
@@ -21,7 +21,7 @@ import Icon from "@/shared/components/Icon";
 export default function App() {
   const [isSaveModal, setisSaveModal] = useState(false);
 
-  useEffect(() => initTabsStore(), []);
+  useRestoredTabsSync();
 
   const tabs = useTabsStore((state) => state.tabs);
   const windows = useTabsStore((state) => state.windows);

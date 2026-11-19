@@ -1,13 +1,12 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router";
 
-import { initTabsStore } from "@/features/tabs/store/initTabsStore";
+import { useRestoredTabsSync } from "@/features/collections/hooks/useRestoredTabsSync";
 import { useTabsStore } from "@/features/tabs/store/useTabsStore";
 import Header from "@/layouts/Header";
 import Sidebar from "@/layouts/Sidebar";
 
 export default function Dashboard() {
-  useEffect(() => initTabsStore(), []);
+  useRestoredTabsSync();
 
   const tabs = useTabsStore((state) => state.tabs);
   const windows = useTabsStore((state) => state.windows);

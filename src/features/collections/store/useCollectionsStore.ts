@@ -7,6 +7,7 @@ type CollectionState = {
   restoredCollections: Record<string, number[]>;
   addRestoredTabs: (collectionId: string, tabIds: number[]) => void;
   removeRestoredTabs: (collectionId: string) => void;
+  removeClosedTab: (tabId: number) => void;
 };
 
 const STORAGE_KEY = "restoredCollections";
@@ -31,6 +32,18 @@ export const useCollectionsStore = create<CollectionState>()(
           delete updated[collectionId];
           return { restoredCollections: updated };
         }),
+
+      removeClosedTab: (tabId) =>
+        set((state) => ({
+          restoredCollections: Object.fromEntries(
+            Object.entries(state.restoredCollections)
+              .map(
+                ([collectionId, ids]) =>
+                  [collectionId, ids.filter((id) => id !== tabId)] as const,
+              )
+              .filter(([, ids]) => ids.length > 0),
+          ),
+        })),
     }),
     {
       name: STORAGE_KEY,

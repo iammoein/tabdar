@@ -26,3 +26,7 @@ export async function restoreTabs(tabs: RestoreTab[]): Promise<number[]> {
   }
   return restorTabIds;
 }
+
+export async function getAllTabs() {
+  return await chrome.tabs.query({});
+}
